@@ -1,51 +1,35 @@
-### Merge sort
+# 10/03/24
+# Project: Recursive.
+# Assignment2: Merge sort.
 
 a = [3, 2, 1, 13, 8, 5, 0, 1]
-# b = [105, 79, 100, 110]
+b = [105, 79, 100, 110]
 
+# Breaks down array to single digit by using recursive method and pass in the values to swap.
 def merge_sort(array)
-  size = array.size
-  if size <= 1
-    array
-  else
-    left, right = array.each_slice((size / 2.0).round).to_a
-    puts sorted_left = merge_sort(left)
-    puts sorted_right = merge_sort(right)
-    # swap(merge_sort(right)
-    merge (sorted_left, sorted_right)
-  end
+  return array if array.length <= 1
+
+  middle = array.length / 2
+  left = array[0...middle]
+  right = array[middle..-1]
+
+  swap_and_merge(merge_sort(left), merge_sort(right))
 end
 
-def merge(array_left, array_right)
-  if array_left.empty?
-    return array_right
+# Swaps value comparing left and right until either left or right is empty and returns sorted element
+def swap_and_merge(left, right)
+  sorted = []
+  until left.empty? || right.empty? # Do until either right or left is empty
+    if left.first <= right.first # Compares first element of left and right
+      sorted << left.shift  # If left is less append to sorted
+    else
+      sorted << right.shift # If right is less append to sorted
+    end
   end
-  if array_right.empty?
-    return array_left
-  end
+  sorted.concat(left).concat(right) # Add both left and right to sorted. One is always empty.
 end
 
-# def swap(array, sorted_array=[])
-#   if array.size == 1
-#     array
-#   else
-#     if array[0] > array[1]
-#       array[0], array[1] = array[1], array[0]
-#       # sorted_array << array[0]
-#       # sorted_array << array[1]
-#       # p sorted_array
-#       swap(array)
-#     end
-#   end
-# end
 
-
-### Test
-merge_sort(a)
-
-# if array[0] > array[1]
-#   left = array[0]
-#   right = array[1]
-#   array[0] = right
-#   array[1] = left
-# end
+# Test
+p merge_sort(a)
+# p merge_sort(b)
